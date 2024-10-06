@@ -10,9 +10,8 @@ const News = (props) => {
   const [page, setPage] = useState(1);
   const [totalResult, setTotalResult] = useState(0);
   // const [apiKey,setApiKey]=useState('6560580cf1ea42e69c762a538ccadc2d')
-  
 
- const capitalizeFirstLetter = (string) => {
+  const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
@@ -20,7 +19,7 @@ const News = (props) => {
     // props.setPogress(10);
     // api key=6560580cf1ea42e69c762a538ccadc2d
     const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=6560580cf1ea42e69c762a538ccadc2d&page=${page}&pageSize=${props.pageSize}`;
-    setLoading(true)
+    setLoading(true);
     let data = await fetch(url);
     // props.setPogress(30);
     let parsedData = await data.json();
@@ -33,38 +32,43 @@ const News = (props) => {
   };
 
   useEffect(() => {
-    document.title = `${capitalizeFirstLetter(
-    props.category
-  )}-NewsApp`;
+    document.title = `${capitalizeFirstLetter(props.category)}-NewsApp`;
     updateNews();
     // eslint-disable-next-line
-  },[]);
+  }, []);
 
-//  const handlePrevClick = async () => { 
-//     setPage(page-1);
-//     updateNews();
-//   };
+  //  const handlePrevClick = async () => {
+  //     setPage(page-1);
+  //     updateNews();
+  //   };
 
-//  const handleNextClick = async () => {
-//     setPage(page+1);
-//     updateNews();
-//   };
+  //  const handleNextClick = async () => {
+  //     setPage(page+1);
+  //     updateNews();
+  //   };
 
- const fetchMoreData = async () => {
-    setPage(page+1);
-    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=6560580cf1ea42e69c762a538ccadc2d&page=${page+1}&pageSize=${props.pageSize}`;
+  const fetchMoreData = async () => {
+    setPage(page + 1);
+    const url = `https://newsapi.org/v2/top-headlines?country=${
+      props.country
+    }&category=${props.category}&apiKey=6560580cf1ea42e69c762a538ccadc2d&page=${
+      page + 1
+    }&pageSize=${props.pageSize}`;
     // setState({ loading: true });
     let data = await fetch(url);
     let parsedData = await data.json();
     // console.log(parsedData);
-    setArticles(articles.concat(parsedData.articles))
-    setTotalResult(parsedData.totalResults)
-    setLoading(false)
+    setArticles(articles.concat(parsedData.articles));
+    setTotalResult(parsedData.totalResults);
+    setLoading(false);
   };
 
   return (
     <>
-      <h1 className="text-center" style={{marging:'35px 0px',marginTop:'90px'}}>
+      <h1
+        className="text-center"
+        style={{ marging: "35px 0px", marginTop: "90px" }}
+      >
         News-Top {capitalizeFirstLetter(props.category)} Headlines
       </h1>
       {loading && <Spin />}
